@@ -1,0 +1,37 @@
+{   
+    "__comment": "README/ATTENTION: If you want the old beacon base (full 1x1 flat obsidian), rename beacon.json to something else (beacon_old.json) and this to beacon.json. I can't use a mod setting to change this model AFAIK.",
+    "parent": "block/block",
+    "ambientocclusion": false,
+    "textures": {
+        "particle": "block/glass",
+        "glass": "block/glass",
+        "obsidian": "block/obsidian",
+        "beacon": "block/glass"
+    },
+    "elements": [
+        {   "__comment": "Glass shell",
+            "from": [ 0, 3, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#glass" },
+                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#glass" },
+                "north": { "uv": [ 0, 0, 16, 10 ], "texture": "#glass" },
+                "south": { "uv": [ 0, 0, 16, 10 ], "texture": "#glass" },
+                "west":  { "uv": [ 0, 0, 16, 10 ], "texture": "#glass" },
+                "east":  { "uv": [ 0, 0, 16, 10 ], "texture": "#glass" }
+            }
+        },
+        {   "__comment": "Obsidian base",
+            "from": [ 0, 0, 0 ],
+            "to": [ 16, 3, 16 ],
+            "faces": {
+                "down":  { "uv": [ 0,  0, 16, 16 ], "texture": "#obsidian" },
+                "up":    { "uv": [ 0,  0, 16, 16 ], "texture": "#obsidian" },
+                "north": { "uv": [ 0, 13, 16, 16 ], "texture": "#obsidian" },
+                "south": { "uv": [ 0, 13, 16, 16 ], "texture": "#obsidian" },
+                "west":  { "uv": [ 0, 13, 16, 16 ], "texture": "#obsidian" },
+                "east":  { "uv": [ 0, 13, 16, 16 ], "texture": "#obsidian" }
+            }
+        }
+    ]
+}

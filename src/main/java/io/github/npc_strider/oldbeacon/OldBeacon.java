@@ -22,10 +22,6 @@ public class OldBeacon implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
-		// System.out.println("Load"+MOD_ID);
 
 		//Config file stuff.
 		Properties p = new Properties();
@@ -41,7 +37,7 @@ public class OldBeacon implements ModInitializer {
 			}
 		} catch (FileNotFoundException ex) {
 			List<String> lines = Arrays.asList(
-				"# default: true. Beacon has a blue star when it is not emitting a beam.",
+				"# default: true. Beacon has a blue star when it is not emitting a beam. Setting this to false results in the star being yellow regardless of whether it's active",
 				"idle_anim=true"
 			);
 			try {
@@ -52,6 +48,8 @@ public class OldBeacon implements ModInitializer {
 			}
 		}
 		IDLE_ANIM = p.getProperty("idle_anim").toLowerCase().trim().equals("true") ? true : false;
+		//
+		
 	};
 
 }

@@ -1,5 +1,12 @@
 package io.github.npc_strider.oldbeacon.mixin;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+
+import io.github.npc_strider.oldbeacon.OldBeacon;
 import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.OverlayTexture;
@@ -7,25 +14,11 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BeaconBlockEntityRenderer;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.entity.boss.BossBar.Color;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Quaternion;
-
-import java.util.LinkedList;
-import java.util.List;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Coerce;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import io.github.npc_strider.oldbeacon.OldBeacon;
 
 @Mixin(BeaconBlockEntityRenderer.class)
 public class BeaconMixin {
@@ -37,20 +30,12 @@ public class BeaconMixin {
 	private static final Identifier NETHER_STAR_TEXTURE = new Identifier("textures/misc/beacon.png");
 	private static final RenderLayer NETHER_STAR = RenderLayer.getEntityCutoutNoCull(NETHER_STAR_TEXTURE); // Originally 'END_CRYSTAL'
 	private static final float SINE_45_DEGREES = (float)Math.sin(0.7853981633974483D);
-	private ModelPart core = new ModelPart(64, 32, 32, 0).addCuboid(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
-	private ModelPart frame = new ModelPart(64, 32, 0, 0).addCuboid(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
-	private ModelPart bottom = new ModelPart(64, 32, 0, 16).addCuboid(-6.0F, 0.0F, -6.0F, 12.0F, 4.0F, 12.0F);
+	private final ModelPart core = new ModelPart(64, 32, 32, 0).addCuboid(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
+	private final ModelPart frame = new ModelPart(64, 32, 0, 0).addCuboid(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
+	// private final ModelPart bottom = new ModelPart(64, 32, 0, 16).addCuboid(-6.0F, 0.0F, -6.0F, 12.0F, 4.0F, 12.0F); // Don't need this - refers to the bedrock base of the END_CRYSTAL
 
-	@Inject(
-		at = @At("HEAD"),
-		method = "BeaconBlockEntityRenderer()V"
-	)
-	public BeaconBlockEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher) { // For some reason you have to ignore the error during debugging? Everything seems to work.
-		super(blockEntityRenderDispatcher);
-		this.frame = new ModelPart(64, 32, 0, 0).addCuboid(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
-		this.core = new ModelPart(64, 32, 32, 0).addCuboid(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
-		this.bottom = new ModelPart(64, 32, 0, 16).addCuboid(-6.0F, 0.0F, -6.0F, 12.0F, 4.0F, 12.0F);
-	};
+	//Not going to inject this.core, this.frame, this.bottom in public BeaconBlockEntityRenderer.
+	//	Code prevented clean compile, and it seems like we didn't need it anyway?  (I'm a java noob) It still functions correctly ingame. Going to just define these constants now ^^^ rather than in this function.
 	
 	//Why am I not using injects ?
 	//	I'm using overrides for the render for several reasons

@@ -1,6 +1,5 @@
 package io.github.npc_strider.oldbeacon;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,10 +26,16 @@ public class OldBeacon implements ModInitializer {
 		Properties p = new Properties();
 		Path file = Paths.get("config/oldbeacon.cfg");
 		InputStream is = null;
+
+		IDLE_ANIM = true; //Defaults
+
 		try {
 			is = new FileInputStream(file.toString());
 			try {
 				p.load(is);
+
+				IDLE_ANIM = p.getProperty("idle_anim").toLowerCase().trim().equals("false") ? false : true;
+				
 			} catch (IOException ex) {
 				System.out.println("Old beacon: cannot read config!");
 				ex.printStackTrace();
@@ -47,7 +52,6 @@ public class OldBeacon implements ModInitializer {
 				ex_.printStackTrace();
 			}
 		}
-		IDLE_ANIM = p.getProperty("idle_anim").toLowerCase().trim().equals("true") ? true : false;
 		//
 		
 	};

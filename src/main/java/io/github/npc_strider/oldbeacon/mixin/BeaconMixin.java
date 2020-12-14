@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 import io.github.npc_strider.oldbeacon.OldBeacon;
@@ -38,11 +39,12 @@ public class BeaconMixin {
 	//	Code prevented clean compile, and it seems like we didn't need it anyway?  (I'm a java noob) It still functions correctly ingame. Going to just define these constants now ^^^ rather than in this function.
 	
 	//Why am I not using injects ?
-	//	I'm using overrides for the render for several reasons
+	//	I'm using overwrite for the render for several reasons
 	//	1. Not many mods will modify the vanilla beacon renderer - if they did then it's probably because they want to change its graphics.
 	//		If they are changing its graphics, then why bother using this mod? The graphics would conflict if the mixins worked together.
 	//	2. This modification seems so complex that using injection isn't worth it anymore. 
 	//		I was considering using it but once I started making changes to the beacon beam renderer pretty much everything within render is changed, so might as well override it.
+	@Overwrite
 	public void render(BeaconBlockEntity beaconBlockEntity, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
 		//Code here is for the nether star
 		VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(NETHER_STAR);
